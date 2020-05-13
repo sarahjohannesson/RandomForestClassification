@@ -57,7 +57,7 @@ while True:
   a1x = slider1.slide()
   a2x = slider2.slide()
   subx = np.subtract(a2x,a1x)
-  jerkx = ((subx)/timediff )  
+  jerkx = ((subx)/timediff )
 
   a1y = slider3.slide()
   a2y = slider4.slide()
