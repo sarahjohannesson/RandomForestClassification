@@ -3,20 +3,20 @@ import csv
 import numpy as np
 import pandas as pd
 
-nbrOfSample = 1500      #Kolla vad sample från backend
+nbrOfSample = 1500     
 recordingTime = 30
 timediff = recordingTime/nbrOfSample
 
 #load dataset a1 to a nympy-array
 with open('Rörelse - 6 - BodyAcc-XYZ.csv', 'r') as file:
  a1 = list(csv.reader(file))
- a1 = np.array(a1[1:], dtype=np.float)          #kontrollera om det är 0/1
+ a1 = np.array(a1[1:], dtype=np.float)         
 
 # load dataset a2 to a nympy-array
 with open( 'Rörelse - 6 - BodyAcc-XYZ.csv', 'r' ) as file:
   a2 = list( csv.reader( file ) )
   a2 = np.array( a2[ 1: ], dtype=np.float )
-  a2 = np.delete(a2, 0,0)    #tar bort första "raden" i matrisen
+  a2 = np.delete(a2, 0,0)    
 
 # seperate data
 data = pd.DataFrame( {
@@ -35,7 +35,7 @@ data2 = pd.DataFrame( {
 } )
 data.head()
 
-#sliding window - tar 1 i taget. Använder while & lägger in i ny vecktor.
+#sliding window 
 from window_slider import Slider
 bucket_size = 1
 overlap_count = 0
@@ -45,7 +45,7 @@ slider3 = Slider(bucket_size, overlap_count)
 slider4 = Slider(bucket_size, overlap_count)
 slider5 = Slider(bucket_size, overlap_count)
 slider6 = Slider(bucket_size, overlap_count)
-slider1.fit(data['a1x'].values)                  #OBS måste ersätta/ta bort alla "[" "]" mha ersätt alla i CVS-fil.
+slider1.fit(data['a1x'].values)                  
 slider2.fit(data2['a2x'].values)
 slider3.fit(data['a1y'].values)
 slider4.fit(data2['a2y'].values)
@@ -57,7 +57,7 @@ while True:
   a1x = slider1.slide()
   a2x = slider2.slide()
   subx = np.subtract(a2x,a1x)
-  jerkx = ((subx)/timediff )  #OBS- eventuellt byta ut 0.02 räknas ut med nbr of samples/sec of movement
+  jerkx = ((subx)/timediff )  
 
   a1y = slider3.slide()
   a2y = slider4.slide()
@@ -70,10 +70,10 @@ while True:
   jerkz = ((subz)/timediff )
 
   # skriv in i csv-file.
-  with open('Rörelse - 6 - BodyAccJerk-XYZ.csv', 'a', newline='' ) as f: #byt namn för person/rörelse dvs A-1
+  with open('Rörelse - 6 - BodyAccJerk-XYZ.csv', 'a', newline='' ) as f: 
      writer = csv.writer( f )
      if (i==1):
         writer.writerow(["blank","Jerk-X", "Jerk-Y" ,"Jerk-Z"])
         i = 2
      writer.writerow(["%f\r\n" % i,(jerkx), (jerky),(jerkz)])
-  if slider2.reached_end_of_list(): break #checka att det är lika många sample i varje fil
+  if slider2.reached_end_of_list(): break 
