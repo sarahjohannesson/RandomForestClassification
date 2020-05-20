@@ -60,7 +60,7 @@ while True:
     t = timediff*(x.size)
     SMA = (1/t)*(integralx)
 
-    # write to csv-file.
+    # write to csv-file
     with open('Tot_tGravMag_Freq_51.14.csv', 'a', newline='' ) as f:
         writer = csv.writer( f )
         if (i==1):
