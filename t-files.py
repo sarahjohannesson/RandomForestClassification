@@ -9,12 +9,14 @@ from scipy.stats import entropy
 from scipy.stats import iqr
 from numpy import corrcoef
 
-nbrOfSample = 1500      #Kolla vad sample från backend
-recordingTime = 30
-timediff = recordingTime/nbrOfSample
+#nbrOfSample = 1500      #Kolla vad sample från backend
+#recordingTime = 30
+#timediff = recordingTime/nbrOfSample
+sample_rate = 51.14
+timediff = 1/sample_rate
 
 #load dataset to a nympy-array
-with open('Rörelse - 6 - BodyAccJerk-XYZ.csv', 'r') as file:        #Test_Y&E data-cvs
+with open('Tot_Grav_Freq_51.14.csv', 'r') as file:        #Test_Y&E data-cvs
  har = list(csv.reader(file))
  #first_row = np.array(har[0:1], dtype=np.string)
  har = np.array(har[1:], dtype=np.float)
@@ -106,8 +108,8 @@ while True:
     corrxz = corr_x_z.item(0, 1)
     corryz = corr_y_z.item(0, 1)
 
-    # skriv in i csv-file.
-    with open('Rörelse - 6 - tBodyAccJerk-XYZ.csv', 'a', newline='' ) as f:
+    # write to csv-file.
+    with open('Tot_tGrav_Freq_51.14.csv', 'a', newline='' ) as f:
         writer = csv.writer( f )
         if (i==1):
             writer.writerow(["blank", "mean-x", "mean-y", "mean-z", "std-x", "std-y", "std-z", "mad-x", "mad-y", "mad-z","max-x","max-y", "max-z", "min-x", "min-y", "min-z", "sma", "energy-x", "energy-y", "energy-z", "iqr-x", "iqr-y", "iqr-z", "entropy-x", "entropy-y", "entropy-z", "corr_coeff_X.Y", "corr_coeff_X.Z", "corr_coeff_Y.Z"])

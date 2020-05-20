@@ -3,20 +3,22 @@ import csv
 import numpy as np
 import pandas as pd
 
-nbrOfSample = 1500     
-recordingTime = 30
-timediff = recordingTime/nbrOfSample
+sample_freq = 51.14
+#nbrOfSample = 1500
+#recordingTime = 30
+#timediff = recordingTime/nbrOfSample
+timediff = 1/sample_freq
 
 #load dataset a1 to a nympy-array
-with open('Rörelse - 6 - BodyAcc-XYZ.csv', 'r') as file:
+with open('Tot_Gyro_Freq_51.14.csv', 'r') as file:
  a1 = list(csv.reader(file))
- a1 = np.array(a1[1:], dtype=np.float)         
+ a1 = np.array(a1[1:], dtype=np.float)
 
 # load dataset a2 to a nympy-array
-with open( 'Rörelse - 6 - BodyAcc-XYZ.csv', 'r' ) as file:
+with open( 'Tot_Gyro_Freq_51.14.csv', 'r' ) as file:
   a2 = list( csv.reader( file ) )
   a2 = np.array( a2[ 1: ], dtype=np.float )
-  a2 = np.delete(a2, 0,0)    
+  a2 = np.delete(a2, 0,0)
 
 # seperate data
 data = pd.DataFrame( {
@@ -35,7 +37,7 @@ data2 = pd.DataFrame( {
 } )
 data.head()
 
-#sliding window 
+#sliding window - bucket_size 1 and overlap 0
 from window_slider import Slider
 bucket_size = 1
 overlap_count = 0
@@ -45,7 +47,7 @@ slider3 = Slider(bucket_size, overlap_count)
 slider4 = Slider(bucket_size, overlap_count)
 slider5 = Slider(bucket_size, overlap_count)
 slider6 = Slider(bucket_size, overlap_count)
-slider1.fit(data['a1x'].values)                  
+slider1.fit(data['a1x'].values)
 slider2.fit(data2['a2x'].values)
 slider3.fit(data['a1y'].values)
 slider4.fit(data2['a2y'].values)
@@ -69,11 +71,11 @@ while True:
   subz = np.subtract(a2z,a1z)
   jerkz = ((subz)/timediff )
 
-  # skriv in i csv-file.
-  with open('Rörelse - 6 - BodyAccJerk-XYZ.csv', 'a', newline='' ) as f: 
+  # swrite to csv-file.
+  with open('Tot_GyroJerk_Freq_51.14.csv', 'a', newline='' ) as f:
      writer = csv.writer( f )
      if (i==1):
         writer.writerow(["blank","Jerk-X", "Jerk-Y" ,"Jerk-Z"])
         i = 2
      writer.writerow(["%f\r\n" % i,(jerkx), (jerky),(jerkz)])
-  if slider2.reached_end_of_list(): break 
+  if slider2.reached_end_of_list(): break

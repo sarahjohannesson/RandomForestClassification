@@ -9,15 +9,16 @@ from scipy.stats import entropy
 from scipy.stats import iqr
 from numpy import corrcoef
 
-nbrOfSample = 1500      #Kolla vad nbr_samples från backend
-recordingTime = 30
-timediff = recordingTime/nbrOfSample
-sample_rate = nbrOfSample / recordingTime
+#nbrOfSample = 1500      #Kolla vad sample från backend
+#recordingTime = 30
+#timediff = recordingTime/nbrOfSample
+sample_rate = 51.14 #ÄNDRA SAMPLE_FREQ HÄR
+timediff = 1/sample_rate
 sum_freq =  0
 index_freq = 0
 
 #load dataset to a nympy-array
-with open('Rörelse - 6 - GyroJerkMag.csv', 'r') as file:
+with open('Tot_GyroJerkMag_Freq_51.14.csv', 'r') as file:
  har = list(csv.reader(file))
  har = np.array(har[1:], dtype=np.float)
 
@@ -39,7 +40,7 @@ while True:
     fft_x = abs(np.fft.rfft(x))  #gör FFT i sliding window
     n = fft_x.size
 
-    sample_rate = nbrOfSample/recordingTime
+    #sample_rate = nbrOfSample/recordingTime
     fft_x_freq = np.fft.rfftfreq(x.size, d=1./sample_rate)    #använd denna för att undersöka freq
 
     #Calculate values to cvs-file
@@ -84,7 +85,7 @@ while True:
 
 
     # skriv in i csv-file.
-    with open('Rörelse - 6 - fGyroJerkMag-XYZ.csv', 'a', newline='' ) as f:
+    with open('Tot_fGyroJerkMag_Freq_51.14.csv', 'a', newline='' ) as f:
         writer = csv.writer( f )
         if (i==1):
             writer.writerow(["blank", "mean", "std", "mad", "max", "min", "sma", "energy","iqr","entropy", "maxInds", "meanFreq", "skewness", "kurtosis"])

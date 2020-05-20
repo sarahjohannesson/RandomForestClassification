@@ -9,17 +9,17 @@ from scipy.stats import entropy
 from scipy.stats import iqr
 from numpy import corrcoef
 
-nbrOfSample = 1500      #Kolla vad sample från backend
-recordingTime = 30
-timediff = recordingTime/nbrOfSample
-sample_rate = nbrOfSample / recordingTime
+#nbrOfSample = 1500
+#recordingTime = 30
+#timediff = recordingTime/nbrOfSample
+sample_rate = 51.14
+timediff = 1/sample_rate
 sum_freq =  0
 index_freq = 0
 
 #load dataset to a nympy-array
-with open('Rörelse - 6 - BodyAccJerk-XYZ.csv', 'r') as file:        #Test_Y&E data-cvs
+with open('Tot_Gyro_Freq_51.14.csv', 'r') as file:
  har = list(csv.reader(file))
- #first_row = np.array(har[0:1], dtype=np.string)
  har = np.array(har[1:], dtype=np.float)
 
 #seperate data
@@ -45,9 +45,9 @@ while True:
     x = slider1.slide()
     y = slider2.slide()
     z = slider3.slide()
-                                #byt till rfft. OBS! Kolla om jag vekrligen behöver abs. Sen använd fft.fft.freq för att dubblkolla att frekvenserna stämme.r
-    #FFT - transform görs på vekorn, eller ska det göras separat på varje värde? Får väldigt olika värden.
-    fft_x = abs(np.fft.rfft(x))  #ta absolut värdet eller bara real-delen.
+
+    #FFT
+    fft_x = abs(np.fft.rfft(x))
     fft_y = abs(np.fft.rfft(y))
     fft_z = abs(np.fft.rfft(z))
 
@@ -55,12 +55,11 @@ while True:
     fft_y_freq = np.fft.rfftfreq( y.size, d=1./sample_rate )
     fft_z_freq = np.fft.rfftfreq( z.size, d=1./sample_rate )
 
-    #size på fre och på fft
-    n = fft_x.size     #65
-    n_freq = fft_z_freq.size  #65 för Y&E         OBS! Kolla vad ärdena
+    #Check size
+    n = fft_x.size
+    n_freq = fft_z_freq.size
 
     #Calculate values to cvs-file
-
     meanx = st.mean(fft_x)
     meany = st.mean(fft_y)
     meanz = st.mean(fft_z)
@@ -124,7 +123,7 @@ while True:
 
     # maxInds -- Largest frequency component.
     resultx = np.where(fft_x == maxx)
-    indexx = resultx[0][0]  # väljer platsen första gången max (=magnitude pga abs) förekommer
+    indexx = resultx[0][0]
     max_Inds_x = fft_x_freq.item(indexx)
     resulty = np.where(fft_y == maxy)
     indexy = resulty[0][0]
@@ -158,8 +157,8 @@ while True:
     sum_freq = 0
     index_freq = 0
 
-    # skriv in i csv-file.
-    with open('Rörelse - 6 - fBodyAccJerk-XYZ.csv', 'a', newline='' ) as f:
+    # write to csv csv-file.
+    with open('Tot_fGyro_Freq_51.14.csv', 'a', newline='' ) as f:
         writer = csv.writer( f )
         if (i==1):
             writer.writerow(["blank", "mean-x", "mean-y", "mean-z", "std-x", "std-y", "std-z", "mad-x", "mad-y", "mad-z","max-x","max-y", "max-z", "min-x", "min-y", "min-z", "sma", "energy-x", "energy-y", "energy-z", "iqr-x", "iqr-y", "iqr-z", "entropy-x", "entropy-y", "entropy-z", "maxInds-x", "maxInds-y", "maxInds-z", "meanFreq-x", "meanFreq-y", "meanFreq-z", "skewness-x", "kurtisos-x", "skewness-y", "kurtisos-y", "skewness-z", "kurtisos-z"])

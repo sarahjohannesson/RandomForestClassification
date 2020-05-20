@@ -9,12 +9,14 @@ from scipy.stats import entropy
 from scipy.stats import iqr
 from numpy import corrcoef
 
-nbrOfSample = 1500      #Kolla vad nbr_samples från backend
-recordingTime = 30
-timediff = recordingTime/nbrOfSample
+#nbrOfSample = 1500
+#recordingTime = 30
+#timediff = recordingTime/nbrOfSample
+sample_rate = 51.14
+timediff = 1/sample_rate
 
 #load dataset to a nympy-array
-with open('Rörelse - 6 - GyroJerkMag.csv', 'r') as file:
+with open('Tot_GravMag_Freq_51.14.csv', 'r') as file:
  har = list(csv.reader(file))
  #first_row = np.array(har[0:1], dtype=np.string)
  har = np.array(har[1:], dtype=np.float)
@@ -43,10 +45,12 @@ while True:
     minx = min(x)
     stdx = st.stdev(x)
     iqx = iqr(x)
+
     #Calculate signal entropy
     sx = pd.Series(x)
     vectorx = (sx.groupby( sx ).transform( 'count' ) / len( sx )).values
     entrox = entropy(vectorx)
+
     #Calculate signal energy
     resx = sum(map(lambda i: i * i, x))
     energyx = resx/(x.size)
@@ -56,8 +60,8 @@ while True:
     t = timediff*(x.size)
     SMA = (1/t)*(integralx)
 
-    # skriv in i csv-file.
-    with open('Rörelse - 6 - tGyroJerkMag.csv', 'a', newline='' ) as f:
+    # write to csv-file.
+    with open('Tot_tGravMag_Freq_51.14.csv', 'a', newline='' ) as f:
         writer = csv.writer( f )
         if (i==1):
             writer.writerow(["blank", "mean", "std", "mad", "max", "min", "sma", "energy","iqr","entropy"])
