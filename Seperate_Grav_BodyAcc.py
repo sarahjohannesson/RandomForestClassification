@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 
-#load dataset to a nympy-array
+#load dataset to a nympy-array.
 with open('Grav&Body_acceleration_Person-G_OrderNumber-G-27(2).csv', 'r') as file:
  har = list(csv.reader(file))
  #first_row = np.array(har[0:1], dtype=np.string)
