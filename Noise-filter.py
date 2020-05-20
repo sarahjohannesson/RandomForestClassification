@@ -49,7 +49,7 @@ print(fs)
 fc = 20
 
 
-b, a = signal.butter(3, (fc/(fs/2)), 'low')     #FRÅGA Emma - vilken ordning??
+b, a = signal.butter(3, (fc/(fs/2)), 'low')    
 
 filtx = signal.filtfilt(b,a, medfiltx)
 filty = signal.filtfilt(b,a, medfilty)
