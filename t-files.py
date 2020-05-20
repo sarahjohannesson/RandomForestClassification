@@ -9,14 +9,14 @@ from scipy.stats import entropy
 from scipy.stats import iqr
 from numpy import corrcoef
 
-#nbrOfSample = 1500      #Kolla vad sample från backend
+#nbrOfSample = 1500      
 #recordingTime = 30
 #timediff = recordingTime/nbrOfSample
 sample_rate = 51.14
 timediff = 1/sample_rate
 
 #load dataset to a nympy-array
-with open('Tot_Grav_Freq_51.14.csv', 'r') as file:        #Test_Y&E data-cvs
+with open('Tot_Grav_Freq_51.14.csv', 'r') as file:        
  har = list(csv.reader(file))
  #first_row = np.array(har[0:1], dtype=np.string)
  har = np.array(har[1:], dtype=np.float)
