@@ -30,7 +30,7 @@ data=pd.DataFrame({
 })
 data.head()
 
-#Sliding window - 128 bucket_size with 64 overlap count.
+#Sliding window - 128 bucket_size with 64 overlap count
 from window_slider import Slider
 bucket_size = 128
 overlap_count = 64
@@ -51,7 +51,7 @@ while True:
     fft_y = abs(np.fft.rfft(y))
     fft_z = abs(np.fft.rfft(z))
 
-    fft_x_freq = np.fft.rfftfreq( x.size, d=1./sample_rate )   #ger freq-vektorn.
+    fft_x_freq = np.fft.rfftfreq( x.size, d=1./sample_rate )   
     fft_y_freq = np.fft.rfftfreq( y.size, d=1./sample_rate )
     fft_z_freq = np.fft.rfftfreq( z.size, d=1./sample_rate )
 
