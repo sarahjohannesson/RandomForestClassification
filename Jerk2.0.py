@@ -37,7 +37,7 @@ data2 = pd.DataFrame( {
 } )
 data.head()
 
-#sliding window - bucket_size 1 and overlap 0
+#sliding window - bucket_size 1 and overlap 0.
 from window_slider import Slider
 bucket_size = 1
 overlap_count = 0
