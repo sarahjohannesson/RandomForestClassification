@@ -6,7 +6,6 @@ import numpy as np
 #load dataset to a nympy-array
 with open('Grav_acceleration_OrderNumber-P-37.csv', 'r') as file:
  har = list(csv.reader(file))
- #first_row = np.array(har[0:1], dtype=np.string)
  har = np.array(har[1:], dtype=np.float)
 
 #seperate data
