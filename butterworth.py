@@ -39,7 +39,7 @@ print(fs)
 fc = 0.3
 
 
-b, a = signal.butter(3, (fc/(fs/2)), 'low')     #FRÅGA Emma - vilken ordning??
+b, a = signal.butter(3, (fc/(fs/2)), 'low')     
 
 filtx = signal.filtfilt(b,a, data['acc_x'])
 filty = signal.filtfilt(b,a, data['acc_y'])
