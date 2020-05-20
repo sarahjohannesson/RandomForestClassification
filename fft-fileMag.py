@@ -9,10 +9,10 @@ from scipy.stats import entropy
 from scipy.stats import iqr
 from numpy import corrcoef
 
-#nbrOfSample = 1500      #Kolla vad sample från backend
+#nbrOfSample = 1500      
 #recordingTime = 30
 #timediff = recordingTime/nbrOfSample
-sample_rate = 51.14 #ÄNDRA SAMPLE_FREQ HÄR
+sample_rate = 51.14
 timediff = 1/sample_rate
 sum_freq =  0
 index_freq = 0
@@ -37,11 +37,11 @@ slider1.fit(data['mag'])
 i = 1
 while True:
     x = slider1.slide()
-    fft_x = abs(np.fft.rfft(x))  #gör FFT i sliding window
+    fft_x = abs(np.fft.rfft(x))
     n = fft_x.size
 
     #sample_rate = nbrOfSample/recordingTime
-    fft_x_freq = np.fft.rfftfreq(x.size, d=1./sample_rate)    #använd denna för att undersöka freq
+    fft_x_freq = np.fft.rfftfreq(x.size, d=1./sample_rate)    
 
     #Calculate values to cvs-file
     meanx = st.mean(fft_x)
@@ -71,7 +71,7 @@ while True:
 
     #maxInds
     resultx = np.where( fft_x == maxx )
-    indexx = resultx[ 0 ][ 0 ]  # väljer platsen första gången max (=magnitude pga abs) förekommer
+    indexx = resultx[ 0 ][ 0 ] 
     max_Inds = fft_x_freq.item( indexx )
 
     #meanFreq
